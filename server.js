@@ -1,4 +1,5 @@
 const express = require('express');
+const routes = require('./routes');
 const {auth} = require('express-openid-connect');
 const authConfig = require('./config/auth0.config.js');
 const port = process.env.PORT || 3000;
@@ -10,9 +11,7 @@ const app = express();
 app.use(auth(authConfig.config));
 
 //connect to routes folder
-// app.use('/graphql', graphqlHTTP({schema, graphiql:true}));
-app.use('/', require('./routes'));
-
+app.use('/graphql', routes);
 
 //connect to db
 const db = require('./models');

@@ -1,9 +1,7 @@
 const routes = require('express').Router();
-// const users = require('./users');
-// const inventory = require('./inventory');
+const { graphqlHTTP } = require('express-graphql');
+const schema = require('../schema');
 
-// routes.use('/', users);
-// routes.use('/', inventory);
 
 routes.use('/', (req, res, next) => {
   if (req.oidc.isAuthenticated()) {
@@ -22,5 +20,18 @@ routes.use('/', (req, res, next) => {
     res.send(docData);
   }
 });
+routes.use('/graphql', (req, res, next) => {
+  // Check if user is authenticated
+  if (req.oidc.isAuthenticated()) {
+    // User is authenticated, proceed to GraphQL endpoint
+    next();
+  } else {
+    // User is not authenticated, return unauthorized response
+    res.status(401).json({ message: 'Unauthorized' });
+  }
+}, graphqlHTTP({
+  schema,
+  graphiql: true
+}));
 
 module.exports = routes;
