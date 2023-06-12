@@ -1,9 +1,10 @@
 const routes = require('express').Router();
 const { graphqlHTTP } = require('express-graphql');
 const schema = require('../schema');
+const { requiresAuth } = require('express-openid-connect');
 
 
-routes.use('/', (req, res, next) => {
+routes.use('/', requiresAuth(), (req, res, next) => {
   if (req.oidc.isAuthenticated()) {
     // User is authenticated
     let docData = {
@@ -20,7 +21,7 @@ routes.use('/', (req, res, next) => {
     res.send(docData);
   }
 });
-routes.use('/graphql', (req, res, next) => {
+routes.use('/graphql', requiresAuth(), (req, res, next) => {
   // Check if user is authenticated
   if (req.oidc.isAuthenticated()) {
     // User is authenticated, proceed to GraphQL endpoint
