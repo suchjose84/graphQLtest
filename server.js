@@ -17,7 +17,7 @@ app.use('/', (req, res, next) => {
     // User is authenticated
     let docData = {
       // documentationURL: 'https://cse341-mw5a.onrender.com/api-docs',
-      message: 'You are logged in! API doc is at https://cse341-mw5a.onrender.com/api-docs'
+      message: 'You are logged in! API doc is at https://graphqltest.onrender.com'
     };
     res.send(docData);
   } else {
