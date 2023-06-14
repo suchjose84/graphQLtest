@@ -1,3 +1,6 @@
+const db = require('../models');
+const User = db.user;
+
 const {
   GraphQLObjectType,
   GraphQLString,
@@ -8,18 +11,15 @@ const {
   GraphQLError,
   GraphQLBoolean
 } = require('graphql');
-const db = require('../models');
-const User = db.user;
-const Inventory = db.inventory;
-const inventorySchema = require('./inventorySchema');
-const InventoryType = inventorySchema.InventoryType;
-// const Joi = require('joi');
+
+// require Joi Validation;
 const {
   usernameSchema,
   emailSchema,
   passwordSchema
 } = require('../util/validation_schema');
 
+//Root Type
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
@@ -273,61 +273,6 @@ const UserMutation = new GraphQLObjectType({
         }
       },
     },
-    // deleteUsers: {
-    //   type: GraphQLString,
-    //   args: {
-    //     usernames: {
-    //       type: new GraphQLList(GraphQLString),
-    //     },
-    //   },
-    //   async resolve(parent, { usernames }) {
-    //     let deletedUsers = [];
-    //     let failedDeletions = [];
-
-    //     // Delete users based on usernames
-    //     if (usernames && usernames.length > 0) {
-    //       // Find the existing usernames in the database
-    //       const existingUsernames = await User.find({ username: { $in: usernames } }).distinct('username');
-
-    //       // Get the usernames that have a match in the database
-    //       const usernamesToDelete = existingUsernames;
-
-    //       // Get the invalid usernames that are not found in the database
-    //       const invalidUsernames = usernames.filter(username => !existingUsernames.includes(username));
-
-    //       // Delete the users with matching usernames
-    //       const deleteResults = await User.deleteMany({ username: { $in: usernamesToDelete } });
-
-    //       // Check if any users were successfully deleted
-    //       if (deleteResults && deleteResults.deletedCount > 0) {
-    //         deletedUsers.push(deleteResults.deletedCount);
-    //       } else {
-    //         failedDeletions = failedDeletions.concat(usernamesToDelete);
-    //       }
-
-    //       // Add the invalid usernames to the failedDeletions array
-    //       failedDeletions = failedDeletions.concat(invalidUsernames);
-    //     }        
-
-    //     let responseMessage = "";
-
-    //     if (deletedUsers.length > 0) {
-    //       responseMessage = `Successfully deleted ${deletedUsers.reduce((a, b) => a + b, 0)} user(s).`;
-    //     } else {
-    //       responseMessage = "No users were deleted.";
-    //     }
-
-    //     if (failedDeletions.length > 0) {
-    //       responseMessage += ` Failed to delete user(s) with the following usernames: ${failedDeletions.join(", ")}.`;
-    //     } else {
-    //       responseMessage += ` All usernames were deleted successfully.`;
-    //     }
-
-    //     console.log(failedDeletions);
-
-    //     return responseMessage;
-    //   },
-    // },
     deleteUsers: {
       type: GraphQLString,
       args: {
@@ -441,10 +386,16 @@ const UserMutation = new GraphQLObjectType({
   },
 });
 
+// module.exports = new GraphQLSchema({
+//   query: UserQuery,
+//   mutation: UserMutation,
+//   type: UserType
+// });
 
-const schema = new GraphQLSchema({
-  query: UserQuery,
-  mutation: UserMutation
-});
+module.exports = {
+  UserType,
+  UserQuery,
+  UserMutation
+}
 
-module.exports = schema;
+
