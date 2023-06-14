@@ -12,23 +12,23 @@ const app = express();
 // connects to auth0
 app.use(auth(authConfig.config));
 
-app.use('/', (req, res, next) => {
-  if (req.oidc.isAuthenticated()) {
-    // User is authenticated
-    let docData = {
-      // documentationURL: 'https://cse341-mw5a.onrender.com/api-docs',
-      message: 'You are logged in! API doc is at https://graphqltest.onrender.com'
-    };
-    res.send(docData);
-  } else {
-    // User is not authenticated
-    let docData = {
-      // documentationURL: 'https://cse341-mw5a.onrender.com/api-docs',
-      message: 'Welcome guest! Please login.'
-    };
-    res.send(docData);
-  }
-});
+// app.use('/', (req, res, next) => {
+//   if (req.oidc.isAuthenticated()) {
+//     // User is authenticated
+//     let docData = {
+//       // documentationURL: 'https://cse341-mw5a.onrender.com/api-docs',
+//       message: 'You are logged in! API doc is at https://graphqltest.onrender.com'
+//     };
+//     res.send(docData);
+//   } else {
+//     // User is not authenticated
+//     let docData = {
+//       // documentationURL: 'https://cse341-mw5a.onrender.com/api-docs',
+//       message: 'Welcome guest! Please login.'
+//     };
+//     res.send(docData);
+//   }
+// });
 
 //graphiql
 app.use('/graphql', requiresAuth(), graphqlHTTP({
