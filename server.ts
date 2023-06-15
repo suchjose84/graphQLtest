@@ -48,7 +48,7 @@ import { graphqlHTTP } from 'express-graphql';
 import schema from './schema/index';
 import { auth, requiresAuth } from 'express-openid-connect';
 import { config as authConfig } from './config/auth0.config';
-import { connect } from './models/index';
+import { url } from './models/index';
 
 const port = process.env.PORT || 3000;
 
@@ -74,6 +74,7 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 // Connect to db
+db
 connect()
   .then(() => {
     app.listen(port, () => {

@@ -11,24 +11,17 @@
 
 // module.exports = db;
 
-import dbConfig from '../config/db.config';
+import {url} from '../config/db.config';
 import mongoose from 'mongoose';
-import { UserModel } from './users';
-import { InventoryModel } from './inventory';
 
 mongoose.Promise = global.Promise;
 
-const db: {
-  mongoose: typeof mongoose;
-  url: string;
-  user: UserModel;
-  inventory: InventoryModel;
-} = {} as any;
-
+const db: any = {};
 db.mongoose = mongoose;
-db.url = dbConfig.url;
+db.url = url;
 db.user = require('./users')(mongoose);
 db.inventory = require('./inventory')(mongoose);
 
 export default db;
+
 
