@@ -1,5 +1,5 @@
 const db = require('../models');
-const User = db.user;
+const User = db.users;
 const Inventory = db.inventory;
 
 const {
@@ -415,8 +415,6 @@ const RootMutation = new GraphQLObjectType({
         } else {
           responseMessage += ` All users were deleted successfully.`;
         }
-    
-        console.log(failedDeletions);
     
         return responseMessage;
       },
