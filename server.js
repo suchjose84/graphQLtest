@@ -8,17 +8,17 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 // Connects to auth0
-// app.use(auth(authConfig.config));
+app.use(auth(authConfig.config));
 
-// app.get('/', (req, res) => {
-//   if (req.oidc.isAuthenticated()) {
-//     // User is authenticated
-//     res.send('You are logged in! API doc is at https://graphqltest.onrender.com');
-//   } else {
-//     // User is not authenticated
-//     res.send('Welcome guest! Please login.');
-//   }
-// });
+app.get('/', (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+    // User is authenticated
+    res.send('You are logged in! API doc is at https://graphqltest.onrender.com');
+  } else {
+    // User is not authenticated
+    res.send('Welcome guest! Please login.');
+  }
+});
 
 // GraphiQL
 app.use('/graphql', graphqlHTTP({
