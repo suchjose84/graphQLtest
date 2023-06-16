@@ -69,9 +69,9 @@ const InventoryType = new GraphQLObjectType({
     remaining: { type: GraphQLString },
     unit: { type: GraphQLString },
     userInfo: {
-      type: require('./userSchema').UserType,
+      type: new GraphQLList(UserType),
       resolve(parent, args) {
-        return User.findOne({ username: parent.username });
+        return User.find({ username: parent.username });
       }
     }
   })
