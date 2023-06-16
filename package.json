@@ -5,15 +5,16 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "start-prod": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-server-express": "^3.12.0",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
-    "express-graphql": "^0.12.0",
     "express-openid-connect": "^2.16.0",
     "graphql": "^16.6.0",
     "joi": "^17.9.2",
