@@ -8,25 +8,25 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 // Connects to auth0
-app.use(auth(authConfig.config));
+// app.use(auth(authConfig.config));
 
-app.get('/', (req, res) => {
-  if (req.oidc.isAuthenticated()) {
-    // User is authenticated
-    res.send('You are logged in! API doc is at https://graphqltest.onrender.com');
-  } else {
-    // User is not authenticated
-    res.send('Welcome guest! Please login.');
-  }
-});
+// app.get('/', (req, res) => {
+//   if (req.oidc.isAuthenticated()) {
+//     // User is authenticated
+//     res.send('You are logged in! API doc is at https://graphqltest.onrender.com');
+//   } else {
+//     // User is not authenticated
+//     res.send('Welcome guest! Please login.');
+//   }
+// });
 
-// GraphiQL
+// Set up the GraphQL endpoint
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   graphiql: true
 }));
 
-// Connect to db
+// Connect to the database
 const db = require('./models/index.js');
 db.mongoose
   .connect(db.url, {
@@ -34,6 +34,7 @@ db.mongoose
     useUnifiedTopology: true
   })
   .then(() => {
+    // Start the server
     app.listen(port, () => {
       console.log(`Connected to the database and server running on port ${port}.`);
     });
@@ -42,8 +43,3 @@ db.mongoose
     console.log('Cannot connect to the database!', err);
     process.exit();
   });
-
-
-
-
-
